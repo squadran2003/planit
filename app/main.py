@@ -15,11 +15,15 @@ app.mount("/static", StaticFiles(directory=str(Path(BASE_DIR, 'static'))), name=
 
 templates = Jinja2Templates(directory=str(Path(BASE_DIR, 'templates')))
 
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get('MONGO_CONSTRING'))
-db = client.get_database(os.environ.get('DB_NAME'))
+# client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get('MONGO_CONSTRING'))
+# db = client.get_database(os.environ.get('DB_NAME'))
 
 @app.get("/")
 def read_root(request: Request):
     return templates.TemplateResponse(
         request=request, name="index.html", context={"id": 123}
     )
+
+@app.get("/test")
+def test():
+    return {"message": "Hello World- Test"}
