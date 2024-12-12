@@ -25,5 +25,7 @@ def read_root(request: Request):
     )
 
 @app.get("/test")
-def test():
-    return {"message": "Hello World- Test"}
+async def test(value: int):
+    squared = value ** 2
+    result = {"original": value, "squared": squared, "message": f"Square of {value} is {squared}"}
+    return result
