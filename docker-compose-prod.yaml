@@ -17,4 +17,4 @@ services:
       - "8089:8089"
     env_file:
       - .env
-    command: ["uvicorn", "app.main:app","--host", "0.0.0.0", "--port", "8089","--wokers", "4"]
+    command: ["uvicorn", "app.main:app","--host", "0.0.0.0", "--port", "8089","--workers", "4"]
