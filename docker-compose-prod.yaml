@@ -5,8 +5,6 @@ services:
     build: ./nginx
     ports:
       - "80:80"
-    volumes:
-      - ./nginx:/etc/nginx
     depends_on:
       - planit
   planit:
