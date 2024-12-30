@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlmodel import SQLModel
 from .config.settings import create_db_and_tables, get_session
-from .models import Todo, Service
+from .models import Service
 import motor.motor_asyncio
 import os
 
@@ -75,7 +75,7 @@ async def create_item(item: Item):
     return item
 
 @app.post("/create/service/")
-async def create_todo(service_item: ServiceModel, session= Depends(get_session)):
+async def create_service(service_item: ServiceModel, session= Depends(get_session)):
     service = Service(**service_item.dict())
     session.add(service)
     session.commit()
@@ -83,6 +83,6 @@ async def create_todo(service_item: ServiceModel, session= Depends(get_session))
     return service_item
 
 @app.get("/service/")
-async def get_todos(session=Depends(get_session)):
+async def get_service(session=Depends(get_session)):
     service = session.query(Service).first()
     return service

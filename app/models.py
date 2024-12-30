@@ -2,10 +2,10 @@ from sqlmodel import SQLModel, Field
 import datetime
 
 
-class Todo(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    title: str
-    description: str = None
+# class Todo(SQLModel, table=True):
+#     id: int = Field(default=None, primary_key=True)
+#     title: str
+#     description: str = None
 
 
 class Service(SQLModel, table=True):
