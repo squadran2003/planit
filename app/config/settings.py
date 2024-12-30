@@ -5,6 +5,7 @@ import os
 DATABASE_URL = os.environ.get("DB_STRING", None)
 if DATABASE_URL is None:
     raise ValueError("DB_STRING environment variable not set")
+print(f"DATABASE_URL: {DATABASE_URL}")
 
 # Create engine
 engine = create_engine(DATABASE_URL, echo=True)  # Set echo=False to reduce logging
