@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlmodel import SQLModel
 from .config.settings import create_db_and_tables, get_session
-from .models import Todo
+from .models import Todo, Service
 import motor.motor_asyncio
 import os
 
@@ -33,10 +33,21 @@ class Item(BaseModel):
     price: float
     tax: float | None = None
 
+class ServiceModel(BaseModel):
+    code: int
+    name: str = None
+    description: str = None
+    stripe_price_id: str = None
+    free: bool = True
+    cost: int = 0
+    video_path: str = None
+    poster_path: str = None
+    created_at: str = None
 
-class TodoItem(BaseModel):
-    title: Annotated[str, Query(max_length=20)]
-    description: str
+
+# class TodoItem(BaseModel):
+#     title: Annotated[str, Query(max_length=20)]
+#     description: str
 
 
 @app.on_event("startup")
@@ -63,15 +74,15 @@ async def test(value: int, q: int | None = None):
 async def create_item(item: Item):
     return item
 
-@app.post("/todo/")
-async def create_todo(todo_item: TodoItem, session= Depends(get_session)):
-    todo = Todo(title=todo_item.title, description=todo_item.description)
-    session.add(todo)
+@app.post("/create/service/")
+async def create_todo(service_item: ServiceModel, session= Depends(get_session)):
+    service = Service(**service_item.dict())
+    session.add(service)
     session.commit()
     session.close()
-    return todo_item
+    return service_item
 
-@app.get("/todos/")
-async def get_todos(session=Depends(get_session)) -> list[Todo]:
-    todos = session.query(Todo).all()
-    return todos
+@app.get("/service/")
+async def get_todos(session=Depends(get_session)):
+    service = session.query(Service).first()
+    return service
